@@ -21,37 +21,63 @@ public class HairstyleServiceImpl implements HairstyleService {
         for (Hairstyle hair : hairstyles) {
             result.add(convertToDto(hair));
         }
-        return result;    }
+        return result;
+    }
 
     @Override
     public HairstyleDto getHairstyleById(Long id) {
+        Hairstyle hairstyle = hRep.findById(id).orElse(null);
+        if (hairstyle != null) {
+            return convertToDto(hairstyle);
+        }
         return null;
     }
 
     @Override
     public HairstyleDto addHairstyle(HairstyleDto hairstyleDto) {
-        return null;
+        Hairstyle hairstyle = convertToEntity(hairstyleDto);
+        Hairstyle saved = hRep.save(hairstyle);
+        return convertToDto(saved);
     }
 
     @Override
     public HairstyleDto updateHairstyle(Long id, HairstyleDto hairstyleDto) {
-        return null;
+        Hairstyle existing = hRep.findById(id).orElse(null);
+        if (existing == null) return null;
+
+        existing.setStyleName(hairstyleDto.getStyleName());
+        existing.setFaceShape(hairstyleDto.getFaceShape());
+        existing.setHairType(hairstyleDto.getHairType());
+        existing.setImageUrl(hairstyleDto.getImageUrl());
+
+        Hairstyle updated = hRep.save(existing);
+        return convertToDto(updated) ;
     }
 
     @Override
     public void deleteHairstyle(Long id) {
+        hRep.deleteById(id);
 
     }
 
     @Override
     public List<HairstyleDto> findByFaceShape(String faceShape) {
-        return List.of();
-    }
+        List<Hairstyle> hairstyles = hRep.findByFaceShape(faceShape);
+        List<HairstyleDto> result = new ArrayList<>();
+        for (Hairstyle hair : hairstyles) {
+            result.add(convertToDto(hair));
+        }
+        return result;    }
 
     @Override
     public HairstyleDto updateImageUrl(Long id, String imageUrl) {
-        return null;
-    }
+        Hairstyle existing = hRep.findById(id).orElse(null);
+        if (existing == null) return null;
+
+        existing.setImageUrl(imageUrl);
+
+        Hairstyle updated = hRep.save(existing);
+        return convertToDto(updated);    }
 
     private HairstyleDto convertToDto(Hairstyle hair) {
         HairstyleDto dto = new HairstyleDto();
