@@ -1,8 +1,12 @@
 package com.example.aina.dto;
 
-import groovy.transform.builder.Builder;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class HairstyleDto {
     private Long id;
     private String styleName;

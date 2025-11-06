@@ -2,8 +2,10 @@ package com.example.aina.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "Hairstyles")
 @AllArgsConstructor
@@ -19,6 +21,26 @@ public class Hairstyle {
     private String faceShape;
     private String hairType;
     private String imageUrl;
+
+    //hidden classes chtoby ne peredavat uzeru
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 
     public Long getId() {
         return id;

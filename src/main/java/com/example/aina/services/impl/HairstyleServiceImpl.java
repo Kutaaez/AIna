@@ -7,6 +7,7 @@ import com.example.aina.services.HairstyleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 @Service
@@ -36,21 +37,22 @@ public class HairstyleServiceImpl implements HairstyleService {
     @Override
     public HairstyleDto addHairstyle(HairstyleDto hairstyleDto) {
         Hairstyle hairstyle = convertToEntity(hairstyleDto);
+        hairstyle.setCreatedAt(LocalDateTime.now());
         Hairstyle saved = hRep.save(hairstyle);
         return convertToDto(saved);
     }
 
     @Override
     public HairstyleDto updateHairstyle(Long id, HairstyleDto hairstyleDto) {
-        Hairstyle existing = hRep.findById(id).orElse(null);
-        if (existing == null) return null;
+        Hairstyle upd = hRep.findById(id).orElse(null);
+        if (upd == null) { return null; };
 
-        existing.setStyleName(hairstyleDto.getStyleName());
-        existing.setFaceShape(hairstyleDto.getFaceShape());
-        existing.setHairType(hairstyleDto.getHairType());
-        existing.setImageUrl(hairstyleDto.getImageUrl());
-
-        Hairstyle updated = hRep.save(existing);
+        upd.setStyleName(hairstyleDto.getStyleName());
+        upd.setFaceShape(hairstyleDto.getFaceShape());
+        upd.setHairType(hairstyleDto.getHairType());
+        upd.setImageUrl(hairstyleDto.getImageUrl());
+        upd.setUpdatedAt(LocalDateTime.now());
+        Hairstyle updated = hRep.save(upd);
         return convertToDto(updated) ;
     }
 
@@ -69,15 +71,6 @@ public class HairstyleServiceImpl implements HairstyleService {
         }
         return result;    }
 
-    @Override
-    public HairstyleDto updateImageUrl(Long id, String imageUrl) {
-        Hairstyle existing = hRep.findById(id).orElse(null);
-        if (existing == null) return null;
-
-        existing.setImageUrl(imageUrl);
-
-        Hairstyle updated = hRep.save(existing);
-        return convertToDto(updated);    }
 
     private HairstyleDto convertToDto(Hairstyle hair) {
         HairstyleDto dto = new HairstyleDto();

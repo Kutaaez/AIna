@@ -20,6 +20,5 @@ public interface HairstyleService {
 
 
     List<HairstyleDto> findByFaceShape(String faceShape);
-    HairstyleDto updateImageUrl(Long id, String imageUrl);
 
 }
