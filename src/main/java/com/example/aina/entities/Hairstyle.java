@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "Hairstyles")
@@ -25,6 +26,15 @@ public class Hairstyle {
     //hidden classes chtoby ne peredavat uzeru
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+
+    @ManyToOne
+    private User user;
+
+
+    @ManyToMany
+    private List<Salon> salons;
+
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
@@ -80,5 +90,21 @@ public class Hairstyle {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Salon> getSalons() {
+        return salons;
+    }
+
+    public void setSalons(List<Salon> salons) {
+        this.salons = salons;
     }
 }
