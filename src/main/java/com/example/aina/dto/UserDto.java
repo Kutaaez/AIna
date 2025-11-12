@@ -47,4 +47,12 @@ public class UserDto {
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
     }
+
+    public List<HairstyleDto> getUserHairstyles() {
+        return userHairstyles;
+    }
+
+    public void setUserHairstyles(List<HairstyleDto> userHairstyles) {
+        this.userHairstyles = userHairstyles;
+    }
 }

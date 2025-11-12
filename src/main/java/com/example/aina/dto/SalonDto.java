@@ -16,6 +16,14 @@ public class SalonDto {
     private String phoneNumber;
     private List<HairstyleDto> hairstyles;
 
+    public List<HairstyleDto> getHairstyles() {
+        return hairstyles;
+    }
+
+    public void setHairstyles(List<HairstyleDto> hairstyles) {
+        this.hairstyles = hairstyles;
+    }
+
     public Long getId() {
         return id;
     }
