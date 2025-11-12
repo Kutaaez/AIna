@@ -4,14 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
     private Long id;
-    private String gender;
-    private String username;
-    private String email;
+    private String userGender;
+    private String userName;
+    private String userEmail;
+    private List<HairstyleDto> userHairstyles;
 
     public Long getId() {
         return id;
@@ -21,27 +24,27 @@ public class UserDto {
         this.id = id;
     }
 
-    public String getGender() {
-        return gender;
+    public String getUserGender() {
+        return userGender;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setUserGender(String userGender) {
+        this.userGender = userGender;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 }

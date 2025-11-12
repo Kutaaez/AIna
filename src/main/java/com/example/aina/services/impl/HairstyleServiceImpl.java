@@ -2,6 +2,7 @@ package com.example.aina.services.impl;
 
 import com.example.aina.dto.HairstyleDto;
 import com.example.aina.entities.Hairstyle;
+import com.example.aina.mappers.HairstyleMapper;
 import com.example.aina.repository.HairstyleRepository;
 import com.example.aina.services.HairstyleService;
 import lombok.RequiredArgsConstructor;
@@ -13,82 +14,62 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class HairstyleServiceImpl implements HairstyleService {
+
     private final HairstyleRepository hRep;
+    private final HairstyleMapper hMap;
 
     @Override
     public List<HairstyleDto> getAllHairstyles() {
         List<Hairstyle> hairstyles = hRep.findAll();
         List<HairstyleDto> result = new ArrayList<>();
-        for (Hairstyle hair : hairstyles) {
-            result.add(convertToDto(hair));
+        for (Hairstyle h : hairstyles) {
+            result.add(hMap.toDto(h));
         }
         return result;
     }
 
     @Override
     public HairstyleDto getHairstyleById(Long id) {
-        Hairstyle hairstyle = hRep.findById(id).orElse(null);
-        if (hairstyle != null) {
-            return convertToDto(hairstyle);
-        }
-        return null;
+        Hairstyle hair = hRep.findById(id).orElse(null);
+        if (hair == null) return null;
+        return hMap.toDto(hair);
     }
 
     @Override
-    public HairstyleDto addHairstyle(HairstyleDto hairstyleDto) {
-        Hairstyle hairstyle = convertToEntity(hairstyleDto);
-        hairstyle.setCreatedAt(LocalDateTime.now());
-        Hairstyle saved = hRep.save(hairstyle);
-        return convertToDto(saved);
+    public HairstyleDto addHairstyle(HairstyleDto dto) {
+        Hairstyle hair = hMap.toEntity(dto);
+        hair.setCreatedAt(LocalDateTime.now());
+        Hairstyle saved = hRep.save(hair);
+        return hMap.toDto(saved);
     }
 
     @Override
-    public HairstyleDto updateHairstyle(Long id, HairstyleDto hairstyleDto) {
-        Hairstyle upd = hRep.findById(id).orElse(null);
-        if (upd == null) { return null; };
+    public HairstyleDto updateHairstyle(Long id, HairstyleDto dto) {
+        Hairstyle hair = hRep.findById(id).orElse(null);
+        if (hair == null) return null;
 
-        upd.setStyleName(hairstyleDto.getStyleName());
-        upd.setFaceShape(hairstyleDto.getFaceShape());
-        upd.setHairType(hairstyleDto.getHairType());
-        upd.setImageUrl(hairstyleDto.getImageUrl());
-        upd.setUpdatedAt(LocalDateTime.now());
-        Hairstyle updated = hRep.save(upd);
-        return convertToDto(updated) ;
+        hair.setStyleName(dto.getStyleName());
+        hair.setFaceShape(dto.getFaceShape());
+        hair.setHairType(dto.getHairType());
+        hair.setImageUrl(dto.getImageUrl());
+        hair.setUpdatedAt(LocalDateTime.now());
+
+        Hairstyle updated = hRep.save(hair);
+        return hMap.toDto(updated);
     }
 
     @Override
     public void deleteHairstyle(Long id) {
         hRep.deleteById(id);
-
     }
 
     @Override
     public List<HairstyleDto> findByFaceShape(String faceShape) {
         List<Hairstyle> hairstyles = hRep.findByFaceShape(faceShape);
         List<HairstyleDto> result = new ArrayList<>();
-        for (Hairstyle hair : hairstyles) {
-            result.add(convertToDto(hair));
+        for (Hairstyle h : hairstyles) {
+            result.add(hMap.toDto(h));
         }
-        return result;    }
-
-
-    private HairstyleDto convertToDto(Hairstyle hair) {
-        HairstyleDto dto = new HairstyleDto();
-        dto.setId(hair.getId());
-        dto.setStyleName(hair.getStyleName());
-        dto.setFaceShape(hair.getFaceShape());
-        dto.setHairType(hair.getHairType());
-        dto.setImageUrl(hair.getImageUrl());
-        return dto;
-    }
-
-    private Hairstyle convertToEntity(HairstyleDto dto) {
-        Hairstyle hair = new Hairstyle();
-        hair.setId(dto.getId());
-        hair.setStyleName(dto.getStyleName());
-        hair.setFaceShape(dto.getFaceShape());
-        hair.setHairType(dto.getHairType());
-        hair.setImageUrl(dto.getImageUrl());
-        return hair;
+        return result;
     }
 }

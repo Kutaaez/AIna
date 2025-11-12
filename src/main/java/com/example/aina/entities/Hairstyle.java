@@ -28,13 +28,8 @@ public class Hairstyle {
     private LocalDateTime updatedAt;
 
 
-    @ManyToOne
-    private User user;
-
-
     @ManyToMany
     private List<Salon> salons;
-
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
@@ -92,13 +87,7 @@ public class Hairstyle {
         this.imageUrl = imageUrl;
     }
 
-    public User getUser() {
-        return user;
-    }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     public List<Salon> getSalons() {
         return salons;

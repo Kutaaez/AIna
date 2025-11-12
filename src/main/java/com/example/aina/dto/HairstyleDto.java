@@ -1,8 +1,11 @@
 package com.example.aina.dto;
 
+import com.example.aina.entities.Salon;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -13,6 +16,7 @@ public class HairstyleDto {
     private String faceShape;
     private String hairType;
     private String imageUrl;
+    private List<Salon> salons;
 
     public Long getId() {
         return id;
